@@ -46,17 +46,18 @@ const Notes = () => {
       <div className="bg-[#101728] p-5 rounded-2xl shadow-lg">
         <h2 className="text-lg font-semibold text-white mb-4">Your Notes</h2>
         {notes.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {notes.map((note, index) => (
-              <div key={index} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {notes.map((note) => (
+              <div key={note.id} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
                 <h3 className="font-bold text-gray-900 text-lg">{note.judul}</h3>
                 <p className="text-gray-700 mt-2 text-sm">{note.Notes}</p>
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-4">
-            <div className="bg-white text-gray-700 px-4 py-3 rounded-lg shadow-sm">No notes available. Please add a new note 📝.</div>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <span className="text-4xl">📝</span>
+            <p className="bg-white text-gray-700 px-4 py-3 rounded-lg shadow-sm">No notes available. Please add a new note.</p>
           </div>
         )}
       </div>

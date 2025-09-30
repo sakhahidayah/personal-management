@@ -1,47 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const Dashboard = () => {
-  const todos = JSON.parse(localStorage.getItem("TodoList"));
-  const notes = JSON.parse(localStorage.getItem("Notes"));
+  const todos = JSON.parse(localStorage.getItem("TodoList")) || [];
+  const notes = JSON.parse(localStorage.getItem("Notes")) || [];
+
   return (
-    <>
-      <div className="w-full h-full flex flex-col gap-14  p-1">
-        <div className="card-default p-2 border w-full rounded-md h-24 flex justify-center items-center">
-          <h1 className="font-semibold text-white text-2xl ">🗂️ Activity Center</h1>
-        </div>
-        <div className="grid grid-cols-3">
-          <Link to={"/todo"}>
-            <div className="card-default flex flex-col  gap-4  border w-72  rounded-lg h-72">
-              <h3 className=" w-max   text-center font-semibold text-white text-lg"> Task</h3>
-              {todos.length > 0
-                ? todos.map((tasks, index) => (
-                    <div key={index} className="flex flex-row items-center gap-1 bg-gray-200 text-black px-3 rounded-full py-2 font-bold text-xs justify-between">
-                      {tasks.Task}
-                    </div>
-                  ))
-                : null}
-            </div>
-          </Link>
-          <Link to={"/notes"}>
-            <div className="card-default flex flex-col gap-4  border w-72  rounded-lg  h-72">
-              <h3 className=" w-max   text-center font-semibold text-white text-lg"> Notes</h3>
-              {notes.length > 0
-                ? notes.map((note, index) => (
-                    <div key={index} className="flex flex-row items-center gap-1 bg-gray-200 text-black px-3 rounded-full py-2 font-bold text-xs justify-between">
-                      {note.judul}
-                    </div>
-                  ))
-                : null}
-            </div>
-          </Link>
-          <Link to={"/schedule"}>
-            <div className="card-default flex flex-col p-4  border w-72  rounded-lg  h-72">
-              <h3 className=" w-max   text-center font-semibold text-white text-lg"> Schedule</h3>
-            </div>
-          </Link>
-        </div>
+    <div className="w-full h-full flex flex-col gap-10 p-4">
+      {/* Header */}
+      <div className="card-default p-4 border rounded-md flex justify-center items-center">
+        <h1 className="font-semibold text-white text-2xl text-center">🗂️ Activity Center</h1>
       </div>
-    </>
+
+      {/* Cards Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Todo Card */}
+        <Link to={"/todo"}>
+          <div className="card-default flex flex-col gap-4 border rounded-lg p-4 h-72">
+            <h3 className="text-center font-semibold text-white text-lg">Task</h3>
+            <div className="flex flex-col gap-2 overflow-y-auto">
+              {todos.length > 0 ? (
+                todos.map((tasks, index) => (
+                  <div key={index} className="flex items-center gap-1 bg-gray-200 text-black px-3 py-2 rounded-full font-bold text-xs">
+                    {tasks.Task}
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm text-center">No tasks yet</p>
+              )}
+            </div>
+          </div>
+        </Link>
+
+        {/* Notes Card */}
+        <Link to={"/notes"}>
+          <div className="card-default flex flex-col gap-4 border rounded-lg p-4 h-72">
+            <h3 className="text-center font-semibold text-white text-lg">Notes</h3>
+            <div className="flex flex-col gap-2 overflow-y-auto">
+              {notes.length > 0 ? (
+                notes.map((note, index) => (
+                  <div key={index} className="flex items-center gap-1 bg-gray-200 text-black px-3 py-2 rounded-full font-bold text-xs">
+                    {note.judul}
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm text-center">No notes yet</p>
+              )}
+            </div>
+          </div>
+        </Link>
+
+        {/* Schedule Card */}
+        <Link to={"/schedule"}>
+          <div className="card-default flex flex-col gap-4 border rounded-lg p-4 h-72">
+            <h3 className="text-center font-semibold text-white text-lg">Schedule</h3>
+            <div className="flex flex-col gap-2 justify-center items-center text-gray-400 text-sm">
+              <p>No schedules yet</p>
+            </div>
+          </div>
+        </Link>
+      </div>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import InputNameTodo from "../atoms/InputNameTodo";
+import InputAddName from "../molecules/InputAddName";
 import TaskList from "../atoms/TaskList";
 import NameTodo from "../organism/NameTodo";
 import FormInputTodo from "../organism/FormInputTodo";
@@ -14,11 +14,11 @@ const Todo = () => {
     return JSON.parse(localStorage.getItem("TodoList")) || [];
   });
   const handleName = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" || event.type === "click") {
       event.preventDefault();
       const value = userName.current.value.trim();
       if (!value) {
-        toast.error("Task cannot be empty. Please enter a valid task.");
+        toast.error("Name cannot be empty. Please enter a valid name.");
         return;
       } else {
         setName(value);
@@ -69,7 +69,7 @@ const Todo = () => {
     <>
       <div className=" w-full h-full  px-4 flex flex-col gap-1">
         <div className=" flex flex-col gap-5  h-full">
-          {name.length > 0 ? <NameTodo name={name} handleRefresh={handleRefresh} /> : <InputNameTodo userName={userName} handleName={handleName} />}
+          {name.length > 0 ? <NameTodo name={name} handleRefresh={handleRefresh} /> : <InputAddName userName={userName} handleName={handleName} />}
           <FormInputTodo input={input} handleSubmit={handleSubmit} />
           <TaskList task={task} handleDelete={handleDelete} />
         </div>

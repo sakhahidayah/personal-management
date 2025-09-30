@@ -5,10 +5,11 @@ const InputNameTodo = ({ userName, handleName }) => {
     <>
       <input
         ref={userName}
-        className="w-1/3 px-4 py-1 rounded-full bg-gradient-to-br shadow-lg hover:shadow-xl transition from-[#1F2937] to-[#111827] font-semibold text-lg"
+        className="w-full pr-12 px-4 py-2 rounded-full bg-[#111827] shadow-lg 
+             hover:shadow-xl transition font-semibold text-lg text-white 
+             placeholder-gray-400"
         type="text"
-        placeholder="Enter your Name..
-            "
+        placeholder="Enter your Name..."
         onKeyDown={handleName}
       />
     </>
