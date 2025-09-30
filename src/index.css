@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card-default {
+    @apply bg-gradient-to-br from-[#1F2937] to-[#111827] shadow-xl rounded-xl p-4;
+  }
+}
