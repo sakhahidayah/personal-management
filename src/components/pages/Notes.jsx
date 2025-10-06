@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 const Notes = () => {
   const inputTitle = useRef();
   const inputNotes = useRef();
+  const [lov, setLov] = useState(null);
+  const [edit, setEdit] = useState(false);
   const [notes, setNotes] = useState(() => {
     return JSON.parse(localStorage.getItem("Notes")) || [];
   });
@@ -32,6 +34,25 @@ const Notes = () => {
       toast.error("Notes cannot be empty. Please enter a valid notes.");
     }
   };
+  const handleEdit = (id) => {
+    const getItem = JSON.parse(localStorage.getItem("Notes")) || [];
+    const selectedItem = getItem.find((item) => item.id === id);
+    console.log("🚀 ~ handleEdit ~ selectedItem:", selectedItem);
+    if (selectedItem) {
+      setLov(selectedItem);
+      setEdit(true);
+    } else {
+      console.log("not found");
+    }
+  };
+  const handleSaveEdit = () => {
+    if (!lov) return;
+    const updatedList = notes.map((item) => (item.id === lov.id ? lov : item));
+    setNotes(updatedList);
+    localStorage.setItem("Notes", JSON.stringify(updatedList));
+    setEdit(false);
+    toast.success("Notes updated successfully!");
+  };
   return (
     <div className="p-6">
       {/* Input Section */}
@@ -52,7 +73,13 @@ const Notes = () => {
               <div key={note.id} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
                 <div className="flex flex-row justify-between">
                   <h3 className="font-bold text-gray-900 text-lg">{note.judul}</h3>
-                  <PencilSimpleIcon size={30} className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer" />
+                  <PencilSimpleIcon
+                    onClick={() => {
+                      handleEdit(note.id);
+                    }}
+                    size={30}
+                    className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer"
+                  />
                 </div>
                 <p className="text-gray-700 mt-2 text-sm">{note.Notes}</p>
               </div>
@@ -65,6 +92,46 @@ const Notes = () => {
           </div>
         )}
       </div>
+      {edit ? (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 ">
+          <div className="p-4 w-96 h-max rounded-lg bg-white relative">
+            <div className="mb-6 flex flex-col gap-3">
+              {lov && (
+                <>
+                  <input
+                    type="text"
+                    value={lov.judul}
+                    onChange={(e) => {
+                      setLov({ ...lov, judul: e.target.value });
+                    }}
+                    className="px-4 py-2 rounded-full bg-[#101728] text-white shadow-md outline-none placeholder-gray-400"
+                  />
+                  <textarea
+                    value={lov.Notes}
+                    onChange={(e) => {
+                      setLov({ ...lov, Notes: e.target.value });
+                    }}
+                    className="px-4 py-3 rounded-2xl bg-[#101728] text-white shadow-md outline-none placeholder-gray-400 resize-none h-28"
+                  />
+                  <button onClick={handleSaveEdit} className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium">
+                    Save Changes
+                  </button>
+                </>
+              )}
+            </div>
+
+            <button
+              onClick={() => {
+                setEdit(false);
+              }}
+              className="px-3 py-1 hover:text-white text-center rounded-full bg-slate-300 absolute -top-3 -right-2 font-bold text-lg"
+            >
+              {" "}
+              &times;
+            </button>
+          </div>
+        </div>
+      ) : null}
       <ToastContainer />
     </div>
   );
