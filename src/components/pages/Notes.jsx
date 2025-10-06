@@ -1,3 +1,4 @@
+import { PencilSimpleIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -49,7 +50,10 @@ const Notes = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.map((note) => (
               <div key={note.id} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
-                <h3 className="font-bold text-gray-900 text-lg">{note.judul}</h3>
+                <div className="flex flex-row justify-between">
+                  <h3 className="font-bold text-gray-900 text-lg">{note.judul}</h3>
+                  <PencilSimpleIcon size={30} className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer" />
+                </div>
                 <p className="text-gray-700 mt-2 text-sm">{note.Notes}</p>
               </div>
             ))}
