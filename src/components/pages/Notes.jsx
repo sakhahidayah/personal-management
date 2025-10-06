@@ -37,7 +37,6 @@ const Notes = () => {
   const handleEdit = (id) => {
     const getItem = JSON.parse(localStorage.getItem("Notes")) || [];
     const selectedItem = getItem.find((item) => item.id === id);
-    console.log("🚀 ~ handleEdit ~ selectedItem:", selectedItem);
     if (selectedItem) {
       setLov(selectedItem);
       setEdit(true);
