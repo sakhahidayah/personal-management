@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { PencilSimpleIcon, X } from "@phosphor-icons/react";
+import { PencilSimpleIcon, X, TrashSimpleIcon } from "@phosphor-icons/react";
 
 const Schedule = () => {
   const title = useRef();
@@ -56,6 +56,16 @@ const Schedule = () => {
       toast.error("Schedule cannot be empty. Please enter a valid notes.");
     }
   };
+  const handleDelete = (id) => {
+    if (id) {
+      const updated = jadwal.filter((res) => res.id !== id);
+      setJadwal(updated);
+      localStorage.setItem("Schedule", JSON.stringify(updated));
+      toast.success("🗑️ Schedule has been removed successfully.");
+    } else {
+      toast.error(" Schedule was not found.");
+    }
+  };
   return (
     <>
       <div className="p-6">
@@ -77,15 +87,24 @@ const Schedule = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {jadwal.map((items) => (
                 <div key={items.id} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
-                  <div className="flex flex-row justify-between">
+                  <div className="flex flex-row items-center justify-between">
                     <h3 className="font-bold text-gray-900 text-lg">{items.judul}</h3>
-                    <PencilSimpleIcon
-                      onClick={() => {
-                        handleEdit(items.id);
-                      }}
-                      size={30}
-                      className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer"
-                    />
+                    <div className="flex flex-row items-center gap-2">
+                      <TrashSimpleIcon
+                        size={30}
+                        onClick={() => {
+                          handleDelete(items.id);
+                        }}
+                        className="px-2 self-center rounded-lg py-1 hover:bg-red-300 bg-red-200 text-black cursor-pointer"
+                      />
+                      <PencilSimpleIcon
+                        onClick={() => {
+                          handleEdit(items.id);
+                        }}
+                        size={30}
+                        className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer"
+                      />
+                    </div>
                   </div>
                   <p className="text-gray-500 text-sm">{items.tanggal}</p>
                   <p className="text-gray-700 mt-2 text-sm">{items.jadwalValue}</p>

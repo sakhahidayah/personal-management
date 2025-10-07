@@ -1,4 +1,4 @@
-import { PencilSimpleIcon } from "@phosphor-icons/react";
+import { PencilSimpleIcon, TrashSimpleIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -52,6 +52,16 @@ const Notes = () => {
     setEdit(false);
     toast.success("Notes updated successfully!");
   };
+  const handleDelete = (id) => {
+    if (id) {
+      const updated = notes.filter((res) => res.id !== id);
+      setNotes(updated);
+      localStorage.setItem("Notes", JSON.stringify(updated));
+      toast.success("🗑️ Notes has been removed successfully.");
+    } else {
+      toast.error("Notes was not found.");
+    }
+  };
   return (
     <div className="p-6 ">
       {/* Input Section */}
@@ -72,13 +82,22 @@ const Notes = () => {
               <div key={note.id} className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition">
                 <div className="flex flex-row justify-between">
                   <h3 className="font-bold text-gray-900 text-lg">{note.judul}</h3>
-                  <PencilSimpleIcon
-                    onClick={() => {
-                      handleEdit(note.id);
-                    }}
-                    size={30}
-                    className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer"
-                  />
+                  <div className="flex flex-row items-center gap-2">
+                    <TrashSimpleIcon
+                      size={30}
+                      onClick={() => {
+                        handleDelete(note.id);
+                      }}
+                      className="px-2 self-center rounded-lg py-1 hover:bg-red-300 bg-red-200 text-black cursor-pointer"
+                    />
+                    <PencilSimpleIcon
+                      onClick={() => {
+                        handleEdit(note.id);
+                      }}
+                      size={30}
+                      className="px-2 self-center rounded-lg py-1 hover:bg-yellow-300 bg-yellow-200 text-black cursor-pointer"
+                    />
+                  </div>
                 </div>
                 <p className="text-gray-700 mt-2 text-sm">{note.Notes}</p>
               </div>
