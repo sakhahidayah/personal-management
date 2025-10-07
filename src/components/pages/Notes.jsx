@@ -53,7 +53,7 @@ const Notes = () => {
     toast.success("Notes updated successfully!");
   };
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       {/* Input Section */}
       <div className="mb-6 flex flex-col gap-3">
         <input ref={inputTitle} type="text" placeholder="Enter note title.." className="px-4 py-2 rounded-full bg-[#101728] text-white shadow-md outline-none placeholder-gray-400" />
