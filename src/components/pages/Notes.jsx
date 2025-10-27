@@ -84,7 +84,7 @@ const Notes = () => {
           {notes.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {notes.map((note) => (
-                <div key={note.id} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                <div key={note.id} className="bg-white overflow-hidden rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-bold text-gray-900 flex-1">{note.judul}</h3>
                     <div className="flex gap-2 ml-2">
