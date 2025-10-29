@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
 
 const Notes = () => {
   const inputTitle = useRef();
@@ -29,6 +30,9 @@ const Notes = () => {
       });
       inputTitle.current.value = "";
       inputNotes.current.value = "";
+      toast.success("Notes has been successfully added.");
+    } else {
+      toast.error("Notes cannot be empty. Please enter a valid notes.");
     }
   };
 
@@ -41,12 +45,15 @@ const Notes = () => {
   };
 
   const handleSaveEdit = () => {
-    if (!editingNote) return;
-
-    const updatedList = notes.map((item) => (item.id === editingNote.id ? editingNote : item));
-    setNotes(updatedList);
-    localStorage.setItem("Notes", JSON.stringify(updatedList));
-    setEditingNote(null);
+    if (editingNote) {
+      const updatedList = notes.map((item) => (item.id === editingNote.id ? editingNote : item));
+      setNotes(updatedList);
+      localStorage.setItem("Notes", JSON.stringify(updatedList));
+      setEditingNote(null);
+      toast.success("Notes updated successfully!");
+    } else {
+      toast.error("Schedule updated error!");
+    }
   };
 
   const handleDelete = (id) => {
@@ -54,6 +61,9 @@ const Notes = () => {
       const updated = notes.filter((res) => res.id !== id);
       setNotes(updated);
       localStorage.setItem("Notes", JSON.stringify(updated));
+      toast.success("🗑️ Notes has been removed successfully.");
+    } else {
+      toast.error("Notes was not found.");
     }
   };
 
@@ -134,6 +144,7 @@ const Notes = () => {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };
